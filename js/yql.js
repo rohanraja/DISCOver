@@ -145,15 +145,23 @@ function linkclick(linkname)
 			
 			console.log(youtubeurl);
 			
+			yahooyouurl = youtubeurl;
+			
 			youtubeurl = youtubeurl.replace("watch?v=","embed/");
 			
 			var vidid = youtubeurl.replace(/http:\/\/www.youtube.com\/embed\//, "");
 			
 			//alert(vidid);
 			
-			ytplayer = document.getElementById("ytplayer");
 			
-			ytplayer.loadVideoById(vidid, 0, "large");
+			var pl = document.getElementById("playlist") ;
+			
+			pl.innerHTML = "";
+			
+			pl.innerHTML = "<a href='" + yahooyouurl + "'>"+songname+"</a>" ;
+			
+			YAHOO.MediaPlayer.addTracks(pl,null,false);
+			YAHOO.MediaPlayer.next();
 			
 			updateplayhistory(songname, artistname, vidid);
 			
