@@ -20,20 +20,14 @@
 	/* This will include the yahoo media player on the page */
 </script>
 
+	<script src="js/fbcheck.js"></script>
+
 	<script src="js/yql.js"></script>
 	
 	
 	
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 	
-	<script type="text/javascript">
-	
-	 var fbid = <?php print $_GET['fbid'];?> ;
-	
-		
-
-	
-	</script>
 	
 	<script type="text/javascript">
 	
@@ -48,10 +42,7 @@
 			/* For example: Add other event listeners **/
 			YAHOO.MediaPlayer.onPlaylistUpdate.subscribe(onPlaylistUpateHandler);
 			
-			var pl = document.getElementById("playlist") ;
 			
-						
-			YAHOO.MediaPlayer.addTracks(pl,null,false);
 
 		}
 	
@@ -78,10 +69,9 @@
 
 
 
-			<a  id="fbcon" class="navbar-text pull-right" style=" "href="https://www.facebook.com/dialog/oauth?client_id=295811957186915&redirect_uri=http://collegepedia.in/videotuts/videocookie/fblogin.html&response_type=token" target="_blank">			
-			
+
 			<img src="" style="" id="propictab">
-			</a>
+			<b id="proname"></b>
 	
 	<img src="img/searchl.gif" id="searchl" style="display : none;">
 	<div id="searchresults" style="">
