@@ -211,7 +211,9 @@ function getyoutubeurlfromsearch(srchq)
 function runScript(e) {
 	if (e.keyCode == 13) {
 		
+		alert(YAHOO.MediaPlayer.getPlayerState());
 		searchquery($("#sbox").attr('value'));
 		return false;
 	}
+	
 }
