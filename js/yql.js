@@ -17,7 +17,7 @@ function createyousearchurl(youquery)
 	
 	//yousearchurl = yousearchurl + "%22%20and%20secret%20%3D%20%22a3d93853ba3bad8a99a175e8ffa90a702cd08cfa%22%20and%20ck%3D%22dj0yJmk9YWF3ODdGNWZPYjg2JmQ9WVdrOWVsWlZNRk5KTldFbWNHbzlNVEEyTURFNU1qWXkmcz1jb25zdW1lcnNlY3JldCZ4PTUz%22%20AND%20sites%20%3D%20%22youtube.com%22%3B&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=cbfunc";
 		
-	yousearchurl = yousearchurl + "%22%20and%20secret%20%3D%20%22a3d93853ba3bad8a99a175e8ffa90a702cd08cfa%22%20and%20ck%3D%22dj0yJmk9YWF3ODdGNWZPYjg2JmQ9WVdrOWVsWlZNRk5KTldFbWNHbzlNVEEyTURFNU1qWXkmcz1jb25zdW1lcnNlY3JldCZ4PTUz%22%20AND%20sites%20%3D%20%22youtube.com%22%20AND%20count%20%3D%20%222%22%3B&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys" ;
+	yousearchurl = yousearchurl + "%22%20and%20secret%20%3D%20%22a3d93853ba3bad8a99a175e8ffa90a702cd08cfa%22%20and%20ck%3D%22dj0yJmk9YWF3ODdGNWZPYjg2JmQ9WVdrOWVsWlZNRk5KTldFbWNHbzlNVEEyTURFNU1qWXkmcz1jb25zdW1lcnNlY3JldCZ4PTUz%22%20AND%20sites%20%3D%20%22youtube.com%22%20AND%20count%20%3D%20%225%22%3B&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys" ;
 		
 	yousearchurl = yousearchurl.replace(/\ /g,"%20");
 	//yousearchurl = yousearchurl.replace("Lyrics","");
@@ -91,7 +91,7 @@ function searchquery(squery)
 			
 				vidid2 = youtubeurl.replace(/http:\/\/www.youtube.com\/embed\//, "");
 
-				$("#"+index.toString()).find('img').attr('src','http://img.youtube.com/vi/'+vidid2+'/0.jpg');
+				$("#"+index.toString()).find('img').attr('src','http://img.youtube.com/vi/'+vidid2+'/2.jpg');
 				
 			});
 
@@ -159,9 +159,14 @@ function linkclick(linkname)
 
 	searchurl = createyousearchurl(linkname);
 	
+	var i = 0;
+	
 	$.getJSON(searchurl, function(data) {
-			
-			youtubeurl = data.query.results.bossresponse.web.results.result[0].url;
+		
+			do
+			{
+			isnotplayble = 1;
+			youtubeurl = data.query.results.bossresponse.web.results.result[i].url;
 			
 			console.log(youtubeurl);
 			
@@ -183,10 +188,40 @@ function linkclick(linkname)
 			YAHOO.MediaPlayer.addTracks(pl,null,false);
 			YAHOO.MediaPlayer.next();
 			
+						
+			chkurl = "http://gdata.youtube.com/feeds/api/videos?v=2&alt=jsonc&q=_" + vidid; 
+				
+				
+				$.ajax({
+					url: chkurl,
+					type: "GET",
+					dataType: 'json',
+					async: false,
+					
+					success:function(data){
+								
+				jdata = JSON.stringify(data);
+				
+				if(/\"embed\":\"allowed\"/.test(jdata))
+					isnotplayble = 0;
+				else
+					isnotplayble = 1;
+				
+				
+			}});
+								
+				
+				
+			
+			
+			i = i + 1;
+			
+			}while(isnotplayble && i <6);
+			
 			updateplayhistory(songname, artistname, vidid);
 			
-			
 			$('#searchl').css('display', 'none');
+			
 
 		});
 	
@@ -211,7 +246,7 @@ function getyoutubeurlfromsearch(srchq)
 function runScript(e) {
 	if (e.keyCode == 13) {
 		
-		alert(YAHOO.MediaPlayer.getPlayerState());
+		
 		searchquery($("#sbox").attr('value'));
 		return false;
 	}

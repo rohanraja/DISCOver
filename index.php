@@ -31,6 +31,7 @@
 	
 	<script type="text/javascript">
 	
+		var started = 0;
 	
 		//alert("sd");
 	//	YAHOO.MediaPlayer.addTracks(document.getElementById("playlist2"),0,true));
@@ -43,6 +44,8 @@
 			YAHOO.MediaPlayer.onPlaylistUpdate.subscribe(onPlaylistUpateHandler);
 			
 			
+			YAHOO.MediaPlayer.onTrackStart.subscribe(onProgressHandler); 
+
 
 		}
 	
@@ -54,6 +57,14 @@
 	
 		YAHOO.MediaPlayer.onAPIReady.subscribe(apiReadyHandler);
 	
+	
+		var onProgressHandler = function ()
+		{
+			/* Handler for onPlaylistUpdate event */
+			//alert(" playlist count = " + YAHOO.MediaPlayer.getPlaylistCount()) 
+			//alert("started");
+			started = 1;
+		}
 	
 	
 	
